@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Finanzas</title>
+
+    <!-- Cargar la API de Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        // Cargar la API de visualización y el paquete corechart
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Ejecutar la función cuando la API esté lista
+        google.charts.setOnLoadCallback(drawSheetName);
+
+        function drawSheetName() {
+            var queryString = encodeURIComponent('SELECT C, D OFFSET 0');
+
+            // URL corregida de la hoja de cálculo
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1-latNdhkzndkXg3gSF81uzerFO9wZdocKtThsD3X_So/gviz/tq?sheet=Sheet1&headers=1&tq=' 
+                + queryString
+            );
+
+            query.send(handleSampleDataQueryResponse);
+        }
+
+        function handleSampleDataQueryResponse(response) {
+            if (response.isError()) {
+                alert('Error en la consulta: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+
+            var data = response.getDataTable();
+            var options = {
+                title: "Finanzas",
+                titleTextStyle: { fontSize: 24, bold: true },
+                width: '100%',
+                height: 400,
+                isStacked: true,
+                hAxis: { 
+                    title: "Gastos", 
+                    titleTextStyle: { color: '#008000', fontSize: 16 } 
+                },
+                vAxis: { 
+                    title: "Euros", 
+                    titleTextStyle: { color: '#008000', fontSize: 16 } 
+                },
+                legend: { position: 'top', alignment: 'center' },
+                colors: ['#4285F4', '#EA4335'] // Colores personalizados
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+    <h2 style="text-align: center;">Gráfico de Finanzas</h2>
+    <div id="chart_div" style="width: 80%; margin: auto;"></div>
+</body>
+</html>
