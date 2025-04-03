@@ -15,7 +15,7 @@
         google.charts.setOnLoadCallback(drawSheetName);
 
         function drawSheetName() {
-            var queryString = encodeURIComponent('SELECT C, D OFFSET 0');
+            var queryString = encodeURIComponent('SELECT I, J OFFSET 0');
 
             // URL corregida de la hoja de cálculo
             var query = new google.visualization.Query(
@@ -40,11 +40,11 @@
                 height: 400,
                 isStacked: true,
                 hAxis: { 
-                    title: "Gastos", 
+                    title: "Categoría", 
                     titleTextStyle: { color: '#008000', fontSize: 16 } 
                 },
                 vAxis: { 
-                    title: "Euros", 
+                    title: "Valor", 
                     titleTextStyle: { color: '#008000', fontSize: 16 } 
                 },
                 legend: { position: 'top', alignment: 'center' },
